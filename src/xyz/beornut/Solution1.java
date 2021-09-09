@@ -1,39 +1,24 @@
 package xyz.beornut;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class Solution1 {
-    public static int[] twoSum(int[] nums, int target) {
-        int[] res = new int[2];
-        ArrayList<Integer> arrayList = new ArrayList<Integer>(Arrays.stream(nums).boxed().collect(Collectors.toList()));
-        for(int i = arrayList.size() - 1; i > 0; i--){
-            int j = arrayList.indexOf(target - arrayList.get(i));
-            if(j > -1 && i != j){
-                return new int[]{i, j};
-            }
-        }
-        return res;
-    }
-
-    public static int[] twoSum2(int[] nums, int target) {
-        int[] res = new int[2];
-        HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
-        hashMap.put(nums[0], 0);
-        for(int i = 1; i < nums.length; i++){
-            int num = target - nums[i];
-            if(hashMap.containsKey(num)){
-                return new int[]{hashMap.get(num), i};
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            if(map.containsKey(nums[i])){
+                return new int[]{map.get(nums[i]), i};
             }else{
-                hashMap.put(nums[i], i);
+                map.put(target - nums[i], i);
             }
         }
-        return res;
+        return null;
     }
 
     public static void main(String[] args) {
-        int[] nums = {3, 2, 4};
-        System.out.println(Arrays.toString(twoSum2(nums, 6)));
+        int[] nums = new int[]{3, 3};
+        System.out.println(Arrays.toString(new Solution1().twoSum(nums, 6)));
     }
 }

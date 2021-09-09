@@ -1,38 +1,26 @@
 package xyz.beornut;
 
 public class Solution2 {
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int sum = l1.val + l2.val;
-        int val = sum % 10;
-        int next = sum / 10;
-        ListNode head = new ListNode(val);
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode();
         ListNode current = head;
-        while(l1.next != null || l2.next != null || next > 0){
-            sum = next;
-            if(l1.next != null){
-                l1 = l1.next;
-                sum += l1.val;
-            }
-            if(l2.next != null){
-                l2 = l2.next;
-                sum += l2.val;
-            }
-            val = sum % 10;
-            next = sum / 10;
-            current.next = new ListNode(val);
+        int carry = 0;
+        while (carry != 0 || l1 != null || l2 != null){
+            current.next = new ListNode();
             current = current.next;
+            current.val = ((l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + carry) % 10;
+            carry = ((l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + carry) / 10;
+            l1 = (l1 == null ? null : l1.next);
+            l2 = (l2 == null ? null : l2.next);
         }
-        return head;
+        return head.next;
     }
 
     public static void main(String[] args) {
-        ListNode listNode1 = new ListNode(1);
-        listNode1.next = new ListNode(2);
-        ListNode listNode2 = new ListNode(9);
-        ListNode listNode3 = addTwoNumbers(listNode1, listNode2);
-        while (listNode3 != null){
-            System.out.println(listNode3.val);
-            listNode3 = listNode3.next;
-        }
+        ListNode l1 = new ListNode(1);
+        ListNode l2 = new ListNode(9);
+        l2.next = new ListNode(1);
+        l2.next.next = new ListNode(3);
+        System.out.println(new Solution2().addTwoNumbers(l1, l2));
     }
 }
